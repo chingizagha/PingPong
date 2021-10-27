@@ -32,13 +32,13 @@ namespace PingPong
             this.components = new System.ComponentModel.Container();
             this.player1 = new System.Windows.Forms.PictureBox();
             this.player2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cube = new System.Windows.Forms.PictureBox();
             this.player1Score = new System.Windows.Forms.Label();
             this.player2Score = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.player1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cube)).BeginInit();
             this.SuspendLayout();
             // 
             // player1
@@ -53,20 +53,20 @@ namespace PingPong
             // player2
             // 
             this.player2.BackColor = System.Drawing.Color.Fuchsia;
-            this.player2.Location = new System.Drawing.Point(795, 129);
+            this.player2.Location = new System.Drawing.Point(795, 120);
             this.player2.Name = "player2";
             this.player2.Size = new System.Drawing.Size(27, 127);
             this.player2.TabIndex = 1;
             this.player2.TabStop = false;
             // 
-            // pictureBox1
+            // cube
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBox1.Location = new System.Drawing.Point(396, 166);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(27, 26);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
+            this.cube.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cube.Location = new System.Drawing.Point(398, 169);
+            this.cube.Name = "cube";
+            this.cube.Size = new System.Drawing.Size(27, 26);
+            this.cube.TabIndex = 2;
+            this.cube.TabStop = false;
             // 
             // player1Score
             // 
@@ -102,7 +102,7 @@ namespace PingPong
             this.ClientSize = new System.Drawing.Size(834, 411);
             this.Controls.Add(this.player2Score);
             this.Controls.Add(this.player1Score);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.cube);
             this.Controls.Add(this.player2);
             this.Controls.Add(this.player1);
             this.Name = "Form1";
@@ -112,7 +112,7 @@ namespace PingPong
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.player1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cube)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,7 +128,7 @@ namespace PingPong
         private System.Windows.Forms.Label cpuScore;
         private System.Windows.Forms.PictureBox player1;
         private System.Windows.Forms.PictureBox player2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox cube;
         private System.Windows.Forms.Label player1Score;
         private System.Windows.Forms.Label player2Score;
         private System.Windows.Forms.Timer timer1;
