@@ -105,6 +105,8 @@ namespace PingPong
             this.Controls.Add(this.cube);
             this.Controls.Add(this.player2);
             this.Controls.Add(this.player1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ping Pong";

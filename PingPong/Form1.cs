@@ -16,20 +16,14 @@ namespace PingPong
         {
             InitializeComponent();
         }
-        bool hasArrived = false;    
         bool isWorking = true;
         bool goUp;
         bool goDown;
-        bool player1Bounds = false;
-        bool player2Bounds = false; 
         int speed = 10;
-        int speedBall = 1;
-        //int speed1 = 129;
-        int score = 0;
-        int destX;
-        int destXX;
-        int destY;
-
+        int player1Point;
+        int player2Point;
+        int ballx = 10; 
+        int bally = 10;
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -55,153 +49,106 @@ namespace PingPong
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //Player1 code for moving up and down
-            if (goUp == true && player1.Location.Y > -1)
+            Game();
+
+            void Game()
             {
-                player1.Location = new Point(player1.Location.X, player1.Location.Y - speed);
+                if (goUp == true && player1.Location.Y > -1)
+                {
+                    player1.Location = new Point(player1.Location.X, player1.Location.Y - speed);
+                }
+                if (goDown == true && player1.Location.Y < 283)
+                {
+                    player1.Location = new Point(player1.Location.X, player1.Location.Y + speed);
+                }
+
+
+                if (player2.Location.Y == 0)
+                    isWorking = false;
+                else if (player2.Location.Y == 290)
+                    isWorking = true;
+
+                if (isWorking == true)
+                    player2.Location = new Point(player2.Location.X, player2.Location.Y - speed);
+                else
+                    player2.Location = new Point(player2.Location.X, player2.Location.Y + speed);
+
+                cube.Top -= bally;
+                cube.Left -= ballx;
+
+                if (cube.Left < 0)
+                {
+                    cube.Left = 434;
+                    ballx = -ballx;
+                    ballx -= 2;
+                    player2Point++;
+                }
+
+
+                if (cube.Left + cube.Width > ClientSize.Width)
+                {
+                    cube.Left = 434;
+                    ballx = -ballx;
+                    ballx += 2;
+                    player1Point++;
+                }
+
+                if (cube.Top < 0 || cube.Top + cube.Height > ClientSize.Height)
+                {
+                    bally = -bally;
+                }
+
+                if (cube.Bounds.IntersectsWith(player1.Bounds) || cube.Bounds.IntersectsWith(player2.Bounds))
+                {
+                    ballx = -ballx;
+                }
             }
-            if (goDown == true && player1.Location.Y < 283)
+            
+
+            if(player1Point > 5)
             {
-                player1.Location = new Point(player1.Location.X, player1.Location.Y + speed);
-            }
-
-            //Player2 code for moving up and down
-            if (player2.Location.Y == 0)
-                isWorking = false;
-            else if (player2.Location.Y == 290)
-                isWorking = true;
-
-            if (isWorking == true)
-                player2.Location = new Point(player2.Location.X, player2.Location.Y - speed);
-            else
-                player2.Location = new Point(player2.Location.X, player2.Location.Y + speed);
-
-
-            var rand = new Random();
-            int rnd = rand.Next(0, 280);
-
-            destX = 0;
-            destXX = 807;
-            destY = rnd;
-
-            while(hasArrived == false)
-            {
-                if(cube.Location.X != destX && cube.Location.X > destX)
+                timer1.Stop();
+                MessageBox.Show("Player1 wins, player2 lose");
+                var result = MessageBox.Show("Do you want to play Continue", "Confirm", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    this.Close();
+                else
                 {
-                    cube.Location = new Point(cube.Location.X - speedBall, cube.Location.Y);
+                    player1Score.Text = "00";
+                    player2Score.Text = "00";
+                    timer1.Start();
                 }
-                else if(cube.Location.X != destX && cube.Location.X < destX)
-                {
-                    cube.Location = new Point(cube.Location.X + speedBall, cube.Location.Y);
-                }
-                if (cube.Location.Y != destY && cube.Location.Y > destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y - speedBall);
-                }
-                else if (cube.Location.Y != destY && cube.Location.Y < destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y + speedBall);
-                }
-                if (cube.Location.X <= destX && cube.Location.Y <= destY)
-                    hasArrived = true;
-            }
-
-            //this.SuspendLayout();
-            //cube.Location = new Point(30, rnd);
-            //this.ResumeLayout(); 
-
-            if (player1.Bounds.IntersectsWith(cube.Bounds))
-            {
-                player1Bounds = true;
-                //if (cube.Location.X != destXX && cube.Location.X > destXX)
-                //{
-                //    cube.Location = new Point(cube.Location.X - speedBall, cube.Location.Y);
-                //}
-                //else if (cube.Location.X != destXX && cube.Location.X < destXX)
-                //{
-                //    cube.Location = new Point(cube.Location.X + speedBall, cube.Location.Y);
-                //}
-                //if (cube.Location.Y != destY && cube.Location.Y > destY)
-                //{
-                //    cube.Location = new Point(cube.Location.X, cube.Location.Y - speedBall);
-                //}
-                //else if (cube.Location.Y != destY && cube.Location.Y < destY)
-                //{
-                //    cube.Location = new Point(cube.Location.X, cube.Location.Y + speedBall);
-                //}
             }
 
-            if (player2.Bounds.IntersectsWith(cube.Bounds))
+            player1Score.Text = Convert.ToString(player1Point);
+            player2Score.Text = Convert.ToString(player2Point);
+
+
+            if (player2Point > 5)
             {
-                player2Bounds = true;
-                //if (cube.Location.X != destX && cube.Location.X > destX)
-                //{
-                //    cube.Location = new Point(cube.Location.X - speedBall, cube.Location.Y);
-                //}
-                //else if (cube.Location.X != destX && cube.Location.X < destX)
-                //{
-                //    cube.Location = new Point(cube.Location.X + speedBall, cube.Location.Y);
-                //}
-                //if (cube.Location.Y != destY && cube.Location.Y > destY)
-                //{
-                //    cube.Location = new Point(cube.Location.X, cube.Location.Y - speedBall);
-                //}
-                //else if (cube.Location.Y != destY && cube.Location.Y < destY)
-                //{
-                //    cube.Location = new Point(cube.Location.X, cube.Location.Y + speedBall);
-                //}
+                timer1.Stop();
+                MessageBox.Show("Player2 wins, player1 lose");
+                var result = MessageBox.Show("Do you want to play Continue", "Confirm", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    this.Close();
+                else
+                {
+                    player1Score.Text = "00";
+                    player2Score.Text = "00";
+                    timer1.Start();
+                }
             }
-
-            while(player1Bounds == true)
-            {
-                if (cube.Location.X != destXX && cube.Location.X > destXX)
-                {
-                    cube.Location = new Point(cube.Location.X - speedBall, cube.Location.Y);
-                }
-                else if (cube.Location.X != destXX && cube.Location.X < destXX)
-                {
-                    cube.Location = new Point(cube.Location.X + speedBall, cube.Location.Y);
-                }
-                if (cube.Location.Y != destY && cube.Location.Y > destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y - speedBall);
-                }
-                else if (cube.Location.Y != destY && cube.Location.Y < destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y + speedBall);
-                }
-                if (cube.Location.X <= destXX && cube.Location.Y <= destY)
-                    player1Bounds = false;
-            }
-
-            while(player2Bounds == true)
-            {
-                if (cube.Location.X != destX && cube.Location.X > destX)
-                {
-                    cube.Location = new Point(cube.Location.X - speedBall, cube.Location.Y);
-                }
-                else if (cube.Location.X != destX && cube.Location.X < destX)
-                {
-                    cube.Location = new Point(cube.Location.X + speedBall, cube.Location.Y);
-                }
-                if (cube.Location.Y != destY && cube.Location.Y > destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y - speedBall);
-                }
-                else if (cube.Location.Y != destY && cube.Location.Y < destY)
-                {
-                    cube.Location = new Point(cube.Location.X, cube.Location.Y + speedBall);
-                }
-                if (cube.Location.X <= destX && cube.Location.Y <= destY)
-                    player2Bounds = false;
-            }
-
-
 
 
         }
+
+        
     }
 }
